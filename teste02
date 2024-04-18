@@ -1,0 +1,29 @@
+import time
+import cv2
+from picamera import PiCamera
+from picamera.array import PiRGBArray
+
+def main():
+    # Configura a câmera
+    camera = PiCamera()
+    camera.resolution = (640, 480)
+    camera.framerate = 30
+    raw_capture = PiRGBArray(camera, size=(640, 480))
+
+    # Dá tempo para a câmera se ajustar
+    time.sleep(0.1)
+
+    # Captura uma imagem da câmera
+    camera.capture(raw_capture, format='bgr')
+    image = raw_capture.array
+
+    # Exibe a imagem
+    cv2.imshow('Camera Image', image)
+    cv2.waitKey(0)
+
+    # Limpeza
+    cv2.destroyAllWindows()
+    raw_capture.truncate(0)
+
+if __name__ == "__main__":
+    main()
